@@ -1,5 +1,7 @@
 ﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
+#include "UEForStarterCharacter_CPP.h"
+
 #include "UEForStarterCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
@@ -14,7 +16,7 @@
 #include "Component/HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-AUEForStarterCharacter::AUEForStarterCharacter()
+AUEForStarterCharacter_CPP::AUEForStarterCharacter_CPP()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -54,7 +56,7 @@ AUEForStarterCharacter::AUEForStarterCharacter()
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 
-void AUEForStarterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AUEForStarterCharacter_CPP::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
@@ -64,15 +66,15 @@ void AUEForStarterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		// Moving
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AUEForStarterCharacter::Move);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AUEForStarterCharacter_CPP::Move);
 		EnhancedInputComponent->BindAction(MouseLookAction, ETriggerEvent::Triggered, this,
-		                                   &AUEForStarterCharacter::Look);
+		                                   &AUEForStarterCharacter_CPP::Look);
 
 		// Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUEForStarterCharacter::Look);
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUEForStarterCharacter_CPP::Look);
 
 		PlayerInputComponent->BindAction("OnDamagePressed", IE_Pressed, this,
-		                                 &AUEForStarterCharacter::DamagePlayerCharacter);
+		                                 &AUEForStarterCharacter_CPP::DamagePlayerCharacter);
 	}
 	else
 	{
@@ -83,7 +85,7 @@ void AUEForStarterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	}
 }
 
-void AUEForStarterCharacter::Move(const FInputActionValue& Value)
+void AUEForStarterCharacter_CPP::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
@@ -92,7 +94,7 @@ void AUEForStarterCharacter::Move(const FInputActionValue& Value)
 	DoMove(MovementVector.X, MovementVector.Y);
 }
 
-void AUEForStarterCharacter::Look(const FInputActionValue& Value)
+void AUEForStarterCharacter_CPP::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
@@ -101,7 +103,7 @@ void AUEForStarterCharacter::Look(const FInputActionValue& Value)
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
 }
 
-void AUEForStarterCharacter::DoMove(float Right, float Forward)
+void AUEForStarterCharacter_CPP::DoMove(float Right, float Forward)
 {
 	if (GetController() != nullptr)
 	{
@@ -121,7 +123,7 @@ void AUEForStarterCharacter::DoMove(float Right, float Forward)
 	}
 }
 
-void AUEForStarterCharacter::DoLook(float Yaw, float Pitch)
+void AUEForStarterCharacter_CPP::DoLook(float Yaw, float Pitch)
 {
 	if (GetController() != nullptr)
 	{
@@ -131,26 +133,26 @@ void AUEForStarterCharacter::DoLook(float Yaw, float Pitch)
 	}
 }
 
-void AUEForStarterCharacter::DoJumpStart()
+void AUEForStarterCharacter_CPP::DoJumpStart()
 {
 	// signal the character to jump
 	Jump();
 }
 
-void AUEForStarterCharacter::DoJumpEnd()
+void AUEForStarterCharacter_CPP::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
 }
 
-void AUEForStarterCharacter::BeginPlay()
+void AUEForStarterCharacter_CPP::BeginPlay()
 {
 	Super::BeginPlay();
 
-	HealthComponent->OnHealthChanged.AddDynamic(this, &AUEForStarterCharacter::OnHealthChanged);
+	HealthComponent->OnHealthChanged.AddDynamic(this, &AUEForStarterCharacter_CPP::OnHealthChanged);
 }
 
-void AUEForStarterCharacter::OnHealthChanged(UHealthComponent* HealthComp, float Health, float DamageAmount,
+void AUEForStarterCharacter_CPP::OnHealthChanged(UHealthComponent* HealthComp, float Health, float DamageAmount,
                                              const class UDamageType* DamageType, class AController* InstigatedBy,
                                              AActor* DamageCauser)
 {
@@ -161,7 +163,7 @@ void AUEForStarterCharacter::OnHealthChanged(UHealthComponent* HealthComp, float
 	UE_LOG(LogTemp, Warning, TEXT("The Player's Current Health is: %f"), Health);
 }
 
-void AUEForStarterCharacter::DamagePlayerCharacter()
+void AUEForStarterCharacter_CPP::DamagePlayerCharacter()
 {
 	UGameplayStatics::ApplyDamage(this, 20.0f, GetInstigatorController(), this, GenericDamageType);
 }

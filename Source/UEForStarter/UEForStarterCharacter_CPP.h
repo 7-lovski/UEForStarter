@@ -19,7 +19,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  Implements a controllable orbiting camera
  */
 UCLASS(abstract)
-class AUEForStarterCharacter : public ACharacter
+class AUEForStarterCharacter_CPP : public ACharacter
 {
 	GENERATED_BODY()
 

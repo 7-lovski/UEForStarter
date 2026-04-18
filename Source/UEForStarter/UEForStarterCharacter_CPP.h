@@ -19,7 +19,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  Implements a controllable orbiting camera
  */
 UCLASS(abstract)
-class AUEForStarterCharacter : public ACharacter
+class AUEForStarterCharacter_CPP : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -50,9 +50,8 @@ protected:
 
 public:
 	/** Constructor */
-	AUEForStarterCharacter();
+	AUEForStarterCharacter_CPP();
 
-protected:
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

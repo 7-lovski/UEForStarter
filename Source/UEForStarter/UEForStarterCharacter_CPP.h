@@ -48,7 +48,7 @@ protected:
 
 public:
 	/** Constructor */
-	AUEForStarterCharacter();
+	AUEForStarterCharacter_CPP();
 
 protected:
 	/** Initialize input action bindings */
